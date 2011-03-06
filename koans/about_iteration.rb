@@ -78,7 +78,7 @@ class AboutIteration < EdgeCase::Koan
     assert_equal [11, 12, 13], result
 
     # Files act like a collection of lines
-    File.open("koans/example_file.txt") do |file|
+    File.open("example_file.txt") do |file|
       upcase_lines = file.map { |line| line.strip.upcase }
       assert_equal %w{THIS IS A TEST}, upcase_lines
     end
