@@ -172,7 +172,7 @@ module EdgeCase
       else
         @failed_test = step
         @failure = step.failure
-        add_progress(@pass_count)
+        add_progress(@pass_count) unless @failure.is_a? SyntaxError
         @observations << Color.red("#{step.koan_file}##{step.name} has damaged your karma.")
         throw :edgecase_exit
       end
@@ -187,7 +187,12 @@ module EdgeCase
     end
 
     def instruct
-      if failed?
+      # Syntax errors prevent other tests from running,
+      # and we don't want to show inaccurate progress.
+      if failed? and @failure.is_a? SyntaxError
+        puts Color.red("You must master syntax before progressing any further.\n")
+        puts @failure.message
+      elsif failed?
         @observations.each{|c| puts c }
         encourage
         guide_through_error
@@ -384,6 +389,12 @@ ENDTEXT
           failed(ex) if passed?
         end
       end
+
+      if $SYNTAX_ERROR
+        failed($SYNTAX_ERROR) 
+        $SYNTAX_ERROR = nil
+      end
+
       self
     end
 
