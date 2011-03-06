@@ -30,14 +30,15 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 # Your goal is to write the score method.
 
 module GreedScoring
-  POINTS = { [1,1,1] => 1000 }
+  POINTS = []
+  POINTS << [ [1,1,1], 1000 ]
 
   2.upto(9) do |i|
-    POINTS[ [i,i,i] ] = i * 100
+    POINTS << [ [i,i,i], i * 100 ]
   end
 
-  POINTS[ [1] ] = 100
-  POINTS[ [5] ] = 50
+  POINTS << [ [1], 100 ]
+  POINTS << [ [5], 50 ]
 end
 
 def score(dice)
