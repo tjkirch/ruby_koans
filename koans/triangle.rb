@@ -13,8 +13,16 @@
 # and
 #   about_triangle_project_2.rb
 #
-def triangle(a, b, c)
-  # WRITE THIS CODE
+require 'set'
+
+def triangle(*sides)
+  unique_sides = sides.to_set.size
+
+  case unique_sides
+    when 1 then :equilateral
+    when 2 then :isosceles
+    else :scalene
+  end
 end
 
 # Error class used in part 2.  No need to change this code.
