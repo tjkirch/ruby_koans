@@ -29,8 +29,34 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 #
 # Your goal is to write the score method.
 
+module GreedScoring
+  POINTS = { [1,1,1] => 1000 }
+
+  2.upto(9) do |i|
+    POINTS[ [i,i,i] ] = i * 100
+  end
+
+  POINTS[ [1] ] = 100
+  POINTS[ [5] ] = 50
+end
+
 def score(dice)
-  # You need to write this method
+  dice.sort!
+  total = 0
+
+  i = 0
+  while i < dice.size do
+    GreedScoring::POINTS.each do |pattern, score|
+      if pattern == dice[i, pattern.size]
+        total += score
+        i += pattern.size - 1
+        break
+      end
+    end
+    i += 1
+  end
+
+  total
 end
 
 class AboutScoringProject < EdgeCase::Koan
