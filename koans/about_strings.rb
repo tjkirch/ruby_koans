@@ -141,11 +141,18 @@ EOS
     assert_equal __, string[7..9]
   end
 
-  def test_you_can_get_a_single_character_from_a_string
-    string = "Bacon, lettuce and tomato"
-    assert_equal __, string[1]
+  in_ruby_version("1.8") do
+    def test_you_can_get_a_single_character_from_a_string
+      string = "Bacon, lettuce and tomato"
+      assert_equal __, string[1].chr
+    end
+  end
 
-    # Surprised?
+  in_ruby_version("1.9") do
+    def test_you_can_get_a_single_character_from_a_string
+      string = "Bacon, lettuce and tomato"
+      assert_equal __, string[1]
+    end
   end
 
   in_ruby_version("1.8") do
@@ -162,6 +169,10 @@ EOS
       assert_equal __, ?a
       assert_equal __, ?a == 97
     end
+  end
+
+  def test_you_can_get_a_character_from_an_integer
+    assert_equal __, 97.chr
   end
 
   def test_strings_can_be_split
