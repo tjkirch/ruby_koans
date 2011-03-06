@@ -16,6 +16,10 @@
 require 'set'
 
 def triangle(*sides)
+  a, b, c = sides.sort
+  raise TriangleError if a + b <= c
+  raise TriangleError if sides.any? {|s| s <= 0}
+
   unique_sides = sides.to_set.size
 
   case unique_sides
